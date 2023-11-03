@@ -84,6 +84,7 @@ in your string"""                  // [6]
 ```
 
 ### 05.Functions
+- 함수는 활동들의 그룹이다. 
 
 ### 06. if Expressions
 
