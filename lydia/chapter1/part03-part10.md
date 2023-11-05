@@ -93,6 +93,100 @@ fun checkFun(arg: Nothing): Nothing {
 
 
 ## 07. if 식
+ 
+```kotlin
+fun main() {
+  val n: Int = -11
+  if (n > 0)
+      println("It's positive")
+  else
+      println("It's negative or zero")
+}
+```
+```kotlin
+fun main() {
+  val y: Boolean = false
+  if(!y)
+      println("!y is true")
+}
+```
+```kotlin
+fun main() {
+  val num = 10
+  val result = if (num > 100) 100 else 0
+  println(result) // 0
+}
+```
+```kotlin
+fun trueOrFalse(exp: Boolean): String {
+  if(exp)
+      return "It's true!"
+  return "It's false"
+}
+fun main() {
+    val b = 1
+    println(trueOrFalse(b < 3)) // It's true!
+    println(trueOrFalse(b >= 3)) // It's false!
+}
+```
+```kotlin
+fun trueOrFalse(exp: Boolean): String = {
+  if (exp)
+      "It's true!" // 'return' 을 쓰지 않아도 된다
+  "It's false"
+}
+fun main() {
+    val b = 1
+    println(trueOrFalse(b < 3)) // It's true!
+    println(trueOrFalse(b >= 3)) // It's false!
+}
+```
 
 
 ***
+
+
+## 08. 문자열 템플릿
+- 식별자 앞에 `$`를 붙이면, 문자열 템플릿이 그 식별자의 내용을 String에 넣어준다.
+```kotlin
+fun main() {
+    val a = "hello!\n"
+    val b = 100
+    val c = 3.14
+    println("a: $a" + "b: $b," + "c: $c")
+    println("a: $a" + "b: $b, " + "c: $c")
+    // a: hello!
+    // b: 100, c: 3.14
+}
+
+```
+- `$` 뒤에 중괄호를 붙이고 (`${}`) 그 안에 식을 넣으면 그 식을 평가한다.
+```kotlin
+fun main() {
+    val condition = false
+    println("${if (condition) 'a' else 'b'}") // b
+
+    val a = 11
+    println("$a + 4 = ${a + 4}") // 11 + 4 = 15
+}
+```
+
+- String 안에 큰따옴표 등의 특수 문자를 넣어야 하는 경우에는 `역슬래시(\)`를 사용해 이스케이프(escape)하거나 큰따옴표를 연달아 세 개 쓰는 String 리터럴을 사용해야 한다.
+  - 큰따옴표 세 개를 쓸 때도 큰따옴표 하나만 쓰는 문자열과 마찬가지로 `$` 식별자나 `${식}`을 사용해 식의 값을 삽입할 수 있다.
+```kotlin
+fun main() {
+    val a = "hello"
+    println("a = \"$a\".") // "hello".
+    println("""a = $a.""") // hello.
+}
+```
+
+
+***
+
+
+## 09. 수 타입
+
+
+***
+
