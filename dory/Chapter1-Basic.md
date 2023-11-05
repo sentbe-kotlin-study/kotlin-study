@@ -84,10 +84,42 @@ in your string"""                  // [6]
 ```
 
 ### 05.Functions
-- 함수는 활동들의 그룹이다. 
+- 함수는 고윻한 이름을 갖고 있고, 다른 함수에서 해당 이름을 호출하여 실행될 수 있는 작은 프로그램.
+- 코드를 재사용하는 가장 기본적인 방법
+
+```kotlin
+// 기본형태
+fun functionName(p1: Type1, p2: Type2, ...): ReturnType {
+    // lines of code
+    return result
+}
+```
+- p1, p2: 파라미터는 해당 함수에 전달하는 정보이다. 파라미터에는 식별자 이름: 해당 파라미터 유형으로 전달된다.
+- return: 함수가 완료될 때 생성되는 결과. 의미있는 결과를 제공하지 않을 경우엔 생력하거나 <b>Unit</b> 사용.
+
+함수는 또한 축약된 구문을 사용할 수 있다.
+```kotlin
+fun multiplyByThree(x: Int): Int = x * 3
+fun multiplyByFour(x: Int) = x * 4 // 코틀린이 반환 타입 추론
+```
+- 단일 표현 식인 경우 중괄호 생략 가능
 
 ### 06. if Expressions
+- if는 표현식을 테스트하여 true / false를 확인하고 결과에 따라 작업을 수행한다.
+- 표현식을 미리 정의한 후 사용할 수도 있다.
+```kotlin
+// IfExpressions/If2.kt
+
+fun main() {
+  val x: Boolean = 1 >= 1
+  if (x)
+    println("It's true!")
+}
+/* Output:
+It's true!
+*/
+```
+
 
 ### 07. String Templates
-
 ### 08. 
