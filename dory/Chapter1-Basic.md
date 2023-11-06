@@ -143,3 +143,34 @@ fun main() {
     println("$n, $l, $d")
 }
 ```
+
+### 09. Boolean
+- && (논리곱, and): 연산자 오른쪽과 왼쪽에 있는 Boolean 식이 모두 true 일 때만 true를 돌려준다.
+- || (논리합, or): 연산자 오른쪽과 왼쪽에 있는 Booelan 식 중 하나라도 true면 true를 돌려준다.
+
+```kotlin
+fun isOpen1(hour: Int) {
+  val open = 9
+  val closed = 20
+  println("Operating hours: $open - $closed")
+  val status =
+    if (hour >= open && hour < closed) // [1]
+      true
+    else
+      false
+  println("Open: $status")
+}
+```
+
+다음과 같이 if 문을 더 간단한게 만들 수도 있다. 
+하지만 이런 조건식은 헷갈리기 쉬우므로 항상 가독성을 유지하고 의도를 명시하자!
+
+```kotlin
+val status =
+        if (hour >= open && hour < closed) // [1]
+            true
+        else
+            false
+
+val status = hour >= open && hout <= close
+```
