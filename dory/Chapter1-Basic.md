@@ -120,6 +120,26 @@ It's true!
 */
 ```
 
-
 ### 07. String Templates
-### 08. 
+- String 내부에 값을 삽입할 수 있다. 식별자 이름 앞에 $를 붙이면 된다.
+```kotlin
+fun main() {
+  val answer = 42
+  println("Found $answer!")     // [1]
+  println("printing a $1")      // [2]
+}
+```
+- 프로그램 식별자가 아닌 문자열 앞에 $가 붙은 경우는 아무일도 일어나지 않는다.
+
+### 08. Number Types
+- 정수 타입 : Int, Long
+- 부동소수점 수 타입 : Double
+- 정수 상수는 기본적으로 Int이나 L을 붙이면 Long 타입이다. 상수에 소수점이 있으면 Double이다.
+```kotlin
+fun main() {
+    val n = 1000
+    val l = 1000L
+    val d = 1000.0
+    println("$n, $l, $d")
+}
+```
