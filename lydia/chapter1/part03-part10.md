@@ -186,6 +186,82 @@ fun main() {
 
 
 ## 09. 수 타입
+- 식별자를 만들고 정숫값을 대입하면 코틀린은 Int 타입을 추론한다.
+  - 가독성을 위해 코틀린은 숫자 사이에 밑줄(_)을 넣도록 허용한다.
+  - 기본적인 수학 연산자 더하기(+), 빼기(-), 곱하기(*), 나누기(/), 나머지(%)를 제공한다.
+```kotlin
+fun main() {
+    val million = 1_000_000 // Int 추론
+    println(million)
+}
+```
+- 체질량지수(BMI) 지수 계산 예시
+- 함수 파라미터를 한 줄에 쓸 수 없을 때 코드 작성 예시
+```kotlin
+fun bmiMetric(
+        weight: Double,
+        height: Double
+): String {
+  val bmi = weight / (height * height)
+  return if (bmi < 18.5) "Underweight"
+  else if (bmi < 25) "Normal weight"
+  else "Overweight"
+}
+
+fun main() {
+  val weight = 72.57 // 160 lbs
+  val height = 1.727 // 68 inches
+  val status = bmiMetric(weight, height)
+  println(status)
+}
+```
+- 정수를 다른 정수로 나누면 정수로 돌려준다. (나머지를 버림 처리한다)
+```kotlin
+fun bmiEnglish(
+  weight: Int,
+  height: Int
+): String {
+  val bmi =
+    weight / (height * height) * 703.07 // Double 로 강제 변환하기 위해 703.07을 곱함
+  return if (bmi < 18.5) "Underweight"
+    else if (bmi < 25) "Normal weight"
+    else "Overweight"
+}
+
+fun main() {
+  val weight = 160
+  val height = 68
+  val status = bmiEnglish(weight, height)
+  println(status)
+}
+```
+
+
+***
+
+
+## 10. 불리언
+- 논리곱(and, `&&`)
+  - 연산자 오른쪽과 왼쪽에 있는 Boolean 식이 모두 true 일 때 true 리턴
+- 논리합(or, `||`)
+  - 연산자 오른쪽 또는 왼쪽에 있는 Boolean 식이 하나라도 true 라면 true 리턴
+```kotlin
+fun main() {
+  val sunny = true
+  val hoursSleep = 6
+  val exercise = false
+  val temp = 55
+
+  val happy1 = sunny && temp > 50 || exercise && hoursSleep > 7
+  println(happy1)
+
+  val sameHappy1 = (sunny && temp > 50) || (exercise && hoursSleep > 7)
+  println(sameHappy1)
+
+  val notSame = (sunny && temp > 50 || exercise) && hoursSleep > 7
+  println(notSame)
+}
+```
 
 
 ***
