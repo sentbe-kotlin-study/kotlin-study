@@ -210,3 +210,52 @@ val status =
 
 val status = hour >= open && hout <= close
 ```
+### 11. while
+- while문은 주어진 Boolean식이 true인 동안 블록을 반복 수행한다.
+```kotlin
+fun main() {
+    var i = 0
+    while (condition(i)) {
+        print(".")
+        i += 10
+    }
+}
+```
+- do-while: boolean 식이 false를 돌려줘도 본문이 최소 한번은 실행된다.
+- while: 처음에 조건문이 false면 본문이 결코 실행되지 않는다.
+```kotlin
+fun main() {
+    var a: Int = 1
+    while (a <= 10) {
+        print("${a++}")    //output : 1, 2, 3, 4, 5 ... 10
+    }
+    
+    do {
+        print("${a--}")    //output : 11, 10, 9, 8, 7 ... 1
+    } while(a > 0)
+}
+```
+
+### 12. 루프와 범위
+
+- for: 주어진 순열에 속한 각 값에 대해 코드 블록을 실행한다.
+  - 범위: 양 끝을 표현하는 두 정수를 사용해 구간을 정의한 것이다
+    - .. : 양 끝 값을 포함
+    - until: 끝 값 제외 
+```kotlin
+fun main() {
+  for (i in 1..3) { // = 1 until 4 
+    println("Hey $i")
+  }
+}
+```
+- downTo: 감소하는 범위를 만든다.
+- step: 간격을 변경한다.
+```kotlin
+fun main() {
+  for (i in 10 downTo 1 step 3) {
+    print("$i")
+  }
+}
+```
+
