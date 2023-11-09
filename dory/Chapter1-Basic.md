@@ -258,4 +258,21 @@ fun main() {
   }
 }
 ```
+### 13. in 키워드
 
+- in 키워드는 어떤 값이 주어진 범위 안에 들어 있는지 검사한다.
+
+```kotlin
+fun main() {
+    val percent = 35
+    println(percent in 1..100) // return true
+}
+```
+- in 키워드는 문자열 안에 들어있는지 검사도 가능하다
+
+```kotlin
+fun main() {
+    println('t' in "kotlin") // true
+    println('a' in "kotlin") // false
+}
+```
