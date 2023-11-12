@@ -122,3 +122,28 @@ class Cookie(
 }
 ```
 
+### 21. 패키지
+> 패키지는 연관 있는 코드를 모아둔 것이다.
+
+- import 키워드를 써서 다른 파일에 정의된 코드를 재사용할 수 있다.
+
+```kotlin
+import packagename.ClassName ,,,
+```
+
+- as 키워드를 이용하면 임포트하면서 이름 변경이 가능하다
+```kotlin
+import kotlin.math.PI as circleRatio
+
+fun main() {
+    println(circleRatio)
+}
+```
+
+- 코드를 재사용하려면 package 키워드를 사용해 패키지를 만들어라
+```kotlin
+package pythagorean 
+
+// other file
+import pythagoran.fun ,,,
+```
