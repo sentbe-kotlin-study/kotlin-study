@@ -72,4 +72,53 @@ fun inc() {
     conuter++
 }
 ```
-s
+
+### 19. 생성자
+- 생성자: 새 객체를 초기화한다. 
+- 파라미터: 정보를 전달할 땐 파라미터를 이용한다.
+  - 파라미터에 var, val을 붙이면 본문 밖에서도 접근이 가능하다.
+```kotlin
+// name에 접근 불가
+class Alien(name: String) {
+    val greeting = "Poor $name!"
+}
+
+// name에 접근 가능
+class MutableNameAlien(var name: String)
+```
+
+### 20. 가시성 제한하기
+> 리팩터링을 하는 주된 이유: 유지보수하기 쉽게 만들자!
+
+코드 변경 개선 욕구 -> 하지만 안정적이어야 함. -> 변화해야 하는 요소와 유지되어야 하는 요소를 분리!
+가시성을 제어하기 위해 <b>접근 변경자</b>를 제공한다. 이런 접근 변경자를 사용해 어떤 부분에 접근할 수 있고 없는지를 결정한다.
+
+
+##### private
+- private 키워드는 같은 클래스에 속한 멤버 외에는 아무도 이 멤버에 접근할 수 없다는 뜻이다.
+- 어떤 클래스에서 도우미 함수로 쓰이는 멤버 함수를 private로 선언하면 클래스 외부에서 이 함수를 실수로 쓰는 경우를 방지할 수 있다. 
+```kotlin
+class Cookie(
+        private val isReady: Boolean
+) {
+    private fun crumble() = 
+            println("crumble")
+    
+  public fun bite() =
+          println("bite")
+  
+  fun eat() {
+      isReady = true
+    crumble()
+    bite()
+  }
+  
+  fun main() {
+      val x = Cookie(false)
+    x.bite()
+    // private 멤버에는 접근할 수 없다. 
+    x.eat()
+  }
+}
+```
+
