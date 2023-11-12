@@ -44,3 +44,32 @@ fun main() {
 }
 ```
 
+### 18. 프로퍼티
+> 프로퍼티는 클래스에 속한 val이나 var이다
+
+- 프로퍼티를 정의함으로써 클래스 안에서 상태를 유지한다. -> 클래스를 작성하는 주된 이유
+
+```kotlin
+class Cup {
+    var percentFull = 0
+}
+
+fun main() { 
+    val c1 = Cup()
+    c1.percentFull = 50
+    val c2 = Cup()
+    c2.percentFull = 100
+}
+```
+
+- 최상위 프로퍼티도 정의할 수 있다.
+- var인 최상위 프로퍼티를 선언하는 것은 안티패턴이다. 프로그램이 복잡해질수록 공유된 가변 상태에 대해 제대로 추론하기가 어려워진다. -> 가변상태를 클래스 안에 가두는 것이 가장 좋다. 
+
+```kotlin
+val counter = 0
+
+fun inc() {
+    conuter++
+}
+```
+s
