@@ -89,3 +89,44 @@ fun main() {
     println(-1 !in oneToTen) // true    
 }
 ```
+
+
+***
+
+
+## 14. 식과 문
+- 대부분의 프로그래밍 언어에서 가장 작은 유용한 코드 조각은 문 또는 식이다.
+  - 문은 상태를 변경한다.
+    - 결과값을 돌려주지 않는다.
+      - 아무 값도 돌려주지 않기 때문에 뭔가 유용한 일을 하기 이ㅜ해서는 자신을 둘러싼 주변의 상태를 변경해야만 한다.
+        - 이를 부수 효과 라고 한다.
+  - 식은 값을 만든다.
+    - 결과값을 돌려준다.
+```kotlin
+fun main() {
+    val hours = 10 // 식
+    val minutesPerHour = 60 // 식
+    val minutes = hours * minutesPerHour // 식
+}
+```
+- println() 같은 함수는 결과를 반환하지 않는 것처럼 보인다.
+  - 하지만 println() 이라는 함수 호출도 여전히 식이기 때문에 무언가를 반드시 반환해야 한다.
+  - 코틀린에서는 이런 목적으로 반환타입 Unit 을 사용한다.
+```kotlin
+fun main() {
+  val result = println(42)
+  println(result)
+  // kotlin.Unit
+}
+```
+
+
+***
+
+
+## 15. 1부 요약
+
+
+
+
+***
