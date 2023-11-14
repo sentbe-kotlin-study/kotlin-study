@@ -78,3 +78,56 @@ fun increment() {
 ***
 
 
+## 19. 생성자
+- 생성자(constructor)에 정보를 전달해 새 객체를 초기화 할 수 있다.
+```kotlin
+class Wombat
+fun main() {
+    val wombat = Wombat()
+}
+```
+- 다른 객체 지향 언어에서는 new 키워드가 필요했을 수 있다.
+  - 코틀린은 new가 불필요한 중복이기 때문에 제외한다.
+- 생성자 파라미터 목록에 있는 name을 var나 val로 정의하면 해당 식별자가 프로퍼티로 바뀌며, 생성자 밖에서도 이 식별자에 접근할 수 있게된다.
+  - var 로 정의한 생성자 파라미터는 가변 프로퍼티가 된다.
+```kotlin
+class AlienSpecies(
+    val name: String,
+    var eyes: Int
+) {
+    fun printInfo() {
+        println("name: $name, eyes: $eyes")
+    }
+}
+
+fun main() {
+  val alienSpecies = AlienSpecies("Quetzalcoatlus", 2)
+  println(alienSpecies) // AlienSpecies@3b9a45b3
+  alienSpecies.printInfo() // name: Quetzalcoatlus, eyes: 2
+}
+```
+- println() 은 문자열 대신 객체를 전달받은 경우 객체의 toString()을 호출한 결과를 출력한다.
+- 클래스에 toString()을 정의하지 않으면, 클래스 이름과 객체의 해시 코드를 출력한다.
+  - 클래스에 직접 toString()을 정의하지 않으면 디폴트 toString() 이 호출된다.
+```kotlin
+// 직접 toString()을 구현하는 경우
+class AlienSpecies(
+    val name: String,
+    var eyes: Int
+) {
+    override fun toString(): String {
+        return "AlienSpecies(name='$name', eyes=$eyes)"
+    }
+}
+fun main() {
+  val alienSpecies = AlienSpecies("Quetzalcoatlus", 2)
+  println(alienSpecies) // AlienSpecies(name='Quetzalcoatlus', eyes=2)
+}
+```
+- override 키워드는 이미 정의된 toString() 메서드의 정의를 대신할 진짜 새 정의를 제공하겠다는 뜻이다.
+  - override 키워드를 사용함으로써 코드의 의도를 명확히 할 수 있고, 실수를 줄일 수 있다.
+
+
+***
+
+
