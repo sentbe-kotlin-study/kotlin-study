@@ -192,3 +192,42 @@ fun main() {
     erroneousCode()
 }
 ```
+
+### 24. 리스트
+
+> list: 다른 객체를 담는 객체
+
+컨테이너는 컬렉션 이라고도 한다.
+
+```kotlin
+val ints = listof(1,2,3) // 리스트 생성
+for (i in ints) {
+    // iteration
+}
+ints[4] // 인덱싱
+```
+
+_tip. 리스트의 마지막 원소보다 더 큰 인덱스를 넣으면 ArrayIndexOutOfBoundException을 던진다._
+
+##### 가변 List
+
+가변 list는 필요하다고 명시적으로 표시해야 한다.
+
+- listof(): 읽기전용 리스트
+- mutableListOf(): 변경가능한 리스트
+
+```kotlin
+val list = mutableListOf<Int>()
+```
+
+##### += 의 비밀
+
+- list가 var일 경우 가변리스트처럼 보인다.
+
+```kotlin
+fun main() {
+    var list = listOf('X') // 불변 리스트
+    list += 'Y' // 가변리스트처럼 보임
+    list eq "[X, Y]"
+}
+```
