@@ -18,7 +18,7 @@ fun calculateBMI(
   else "Overweight"
 }
 ```
-> [실행](./example/src/day3/TDDWorks.kt)
+> [바로가기](./example/src/day3/TDDWorks.kt)
 ----
 
 ## 23. 예외
@@ -53,7 +53,7 @@ fun main() {
     }
 }
 ```
-> [실행](./example/src/day3/TryCatch.kt)
+> [바로가기](./example/src/day3/TryCatch.kt)
 
 ## 24. 리스트
 * List 는 코틀린의 순차적 컨테이너 타입
@@ -97,7 +97,7 @@ fun main() {
     println(second(7,9,32)) // ??
 }
 ```
-> [실행](./example/src/day3/TwoFunctionsWithVarargs.kt)
+> [바로가기](./example/src/day3/TwoFunctionsWithVarargs.kt)
 
 ---
 
@@ -124,7 +124,7 @@ fun main() {
     println(mutableSet.toList()) // [3]
 }
 ```
-> [실행](./example/src/day3/MutableSet.kt)
+> [바로가기](./example/src/day3/MutableSet.kt)
 ---
 
 ## 27. 맵
@@ -149,7 +149,7 @@ fun main() {
     // contacts["222"] eq "cleo"
 }
 ```
-> [실행](./example/src/day3/ContactMap.kt)
+> [바로가기](./example/src/day3/ContactMap.kt)
 ---
 
 ## 28. 프로퍼티 접근자
@@ -174,4 +174,4 @@ fun main() {
     println(counter.value2++) // [3]
 }
 ```
-> [실행](./example/src/day3/Counter.kt)
+> [바로가기](./example/src/day3/Counter.kt)
