@@ -231,3 +231,110 @@ fun main() {
     list eq "[X, Y]"
 }
 ```
+
+### 25. 가변 인자 목록
+> vararg 키워드는 길이가 변할 수 있는 인자 목록을 만든다.
+- vararg 인자는 하나까지만 가능.
+- 마지막 파라미터로 선언하는게 간편하다.
+- 해당 파라미터는 Array로 취급된다.
+```kotlin
+fun v(s: String, vararg d: Double) {}
+
+fun main() {
+    v("abc", 1.0, 2.0, 3.0)
+}
+```
+- array를 인자 ㅁ족록으로 변환하고 싶으면 '*'을 사용하라.
+```kotlin
+sum(1, 2, 3, *array, 6) // *을 사용하지 않으면 컴파일 실패
+```
+
+### 26. 집합
+> set은 각각의 값이 오직 하나만 존재할 수 있다.
+- 가장 일반적인 set 연산은 in이나 contains()를 사용해 원소인지 검사
+```kotlin
+fun main() {
+  val intSet = setOf(1,1,2,3,9,9,4)
+  
+  setOf(1, 2) eq setOf(2 ,1) // true 순서는 상관없다.
+  
+  (9 in intSet) eq true
+  
+  // 이 집합이 다른 집합을 포함?
+  intSet.containsAll(setOf(1,9,2))
+  // 합집합
+  intSet.union(setOf(3,4,5,6)) eq setOf(1,2,3,4,5,6,9)
+  // 교집합
+  intSet.intersect(setOf(0,1,2,7,8)) eq setOf(1,2)
+  // 차집합
+  intSet subtract (setOf(0,1,2,7,8)) eq setOf(1,2)
+  intSet - setOf(0,1,9,10) eq setOf(2,3,4)
+}
+```
+
+### 27. 맵
+> map은 키와 값을 연결하고, 키가 주어지만 그 키와 연결된 값을 찾아준다.
+
+```kotlin
+// 키 추가
+val constants = mapOf(
+        "Pi" to 3.141
+)
+// 키, 밸류 출력
+constants.keys
+constants.values
+
+// 이터레이션
+for (entry in constants) {
+    println("${entry.key}")
+  println("${entry.value}")
+}
+
+for ((key, value) in constants) {}
+```
+
+- map 또한 일반 맵은 읽기전용. 변경이 필요할 시 -> MutableMap
+
+```kotlin
+fun main() {
+    val m = mutableMapOf(5 to "five")
+    m += 4 to "four"
+}
+```
+
+- 존재하지 않는 키를 찾으면 null을 리턴
+- exception을 던지고 싶으면 getValue()를 사용하자
+
+### 28. 프로퍼티 접근자
+- 프로퍼티 정의 바로 다음에 get(), set()을 정의하면 게터, 세터를 정의할 수 있다.
+
+```kotlin
+class Default {
+    var i: Int = 0
+      get() {
+          return field 
+      }
+      set(vlaue) {
+          field = value
+      }
+}
+```
+
+- private set()을 지정할 수 있다.
+```kotlin
+class Counter {
+    var value: Int = 0
+        private set 
+    fun inc() = value++
+}
+```
+
+- 필드가 없는 프로퍼티를 정의할 수도 있다.
+```kotlin
+class Cage(private val maxCapacity: Int) {
+    val capaicty: Int
+      get() = maxCapacity - hamsters.size
+}
+```
+
+_tip. 객체 상태가 바뀌지 않는 한 같은 결과를 내놓는 함수는 프로퍼티를 사용하자._
