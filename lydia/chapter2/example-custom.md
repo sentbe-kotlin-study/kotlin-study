@@ -1,5 +1,4 @@
-#### 챕터2. 객체 소개
-- 
+#### chapter2. 커스텀 연습문제
 
 
 ## 배열
@@ -16,9 +15,9 @@
 ### 리스트 만들기
 - 숫자를 두 개 입력받은 후, 두 번째 숫자를 첫 번째 숫자만큼 가지고 있는 리스트를 반환하는 함수를 만들어보자.
   - 예를 들어 replicate(3, 5)를 입력하면 5가 3개 있는 리스트 [5, 5, 5]를 반환한다.
-  - 함수의 선언 타입은 다음과 같다.
-  
-    - `fun replicate(n:Int, element: Int): List<Int>`
+> 함수의 선언 타입은 다음과 같습니다.
+>
+> `fun replicate(n:Int, element: Int): List<Int>`
 ```kotlin
 fun replicate(n:Int, element:Int): List<Int> {
   return when(n) {
@@ -41,12 +40,11 @@ fun main(args: Array<String>) {
 ```
 
 ### 빈 리스트 생성
-- emptyList로 생성해줄 수 있습니다.
+- emptyList 로도 생성해줄 수 있습니다.
 ```kotlin
 fun main(args: Array<String>) {
-
     var emptyList = emptyList<String>()
-
+    val emptyList: List<Int> = emptyList()
 }
 ```
 
@@ -73,7 +71,7 @@ fun main(args: Array<String>) {
 }
 ```
 
-### 클래스 작성
+### 클래스 작성하기
 ```kotlin
 class Duck(val name:String, val age:Int)
 // 이 클래스를 리스트의 제네릭으로 지정해주고 값을 넣어보겠습니다.
@@ -92,26 +90,29 @@ fun main(args: Array<String>) {
 }
 ```
 
-
-
-## map
+### map 사용하기
 ```kotlin
 fun main() {
   val a: List<Int> = listOf(1, 2, 3)
-  val b = a.map { it * 10 }
-  println(b)
+  val b = a.map { it * 10 } // it 키워드로 각 요소 값 접근 가능
+  println(b) // [10, 20, 30]
+
+  val dataList = listOf(MyData(1, "hello"), MyData(2, "world"))
+  dataList.map { (a, b) -> println("$a, $b") }  // 각 데이터 클래스 인스턴스를 구조 분해
 }
 ```
 - 위 예제는 IntRange 클래스에 속하는 두 객체(인스턴스)를 만든다.
   - 각 객체는 메모리에 자신만의 저장공간을 가지고 있다.
   - IntRange 는 클래스지만, 0부터 10까지의 범위를 가리키는 r1 범위는 r2 와 구분되는 별도의 객체다.
-    map()
-    Collection 에 사용할 수 있는 고차 함수이다. Collection 을 구성하는 각 요소들에 대해 특정 표현식에 의거하여 변형을 거친 뒤 새로운 Collection 을 반환해준다.
+    map() Collection 에 사용할 수 있는 고차 함수이다.
+  - Collection 을 구성하는 각 요소들에 대해 특정 표현식에 의거하여 변형을 거친 뒤 새로운 Collection 을 반환해준다.
 
-각 요소들에 대해 10 을 곱해주도록 매핑시켜줬다. it 키워드를 통해 각 요소의 값을 접근할 수 있다. 따라서 아래와 같은 결과를 보여준다.
 
-[10, 20, 30]
-- [mutableMap]https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-map/
+***
+
+
+- 공식 홈페이지 참고
+  - https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-map/
 
 
 ***
