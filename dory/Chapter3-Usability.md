@@ -95,3 +95,73 @@ when (input) {
 }
 ```
 
+### 34. 이넘
+> 이넘은 이름을 모아둔 것이다
+
+- 이넘은 인스턴스 개수가 미리 정해져 있고 클래스 본문안에 이 모든 인스턴스가 나열되어 있는 특별한 종류의 클래스다.
+
+```kotlin
+enum class Level {
+    Overflow, High, Medium, Low, Empty
+}
+```
+
+- 멤버함수나 멤버 프로퍼티의 정의도 가능하다. 
+
+```kotlin
+enum class Direction(val notation: String) {
+    North("N"), South("S");
+    val oppsite: Direction
+        get() = when(this) {
+            North -> South
+        }
+}
+
+fun main() {
+    North.opposite eq South
+}
+```
+
+### 35. 데이터 클래스
+> 데이터 저장만 담당하는 클래스
+- 모든 생성자 파라미터를 var이나 val로 선언해야 한다.
+- data class에서는 equals(), copy()가 자동으로 생성된다.
+
+```kotlin
+data class Simple(
+        val arg1: String
+)
+```
+
+### 36. 구조 분해 선언
+- 하나 이상의 아이템을 반환하고 싶으면 ? -> Pair 사용
+```kotlin
+fun compute(input: Int): Pair<Int, String> = 
+        if (input > 5) Pair(input * 2, "High")
+```
+- 페어의 값을 얻고 싶으면, first/second도 있지만 구조 분해 선언이 가능하다
+```kotlin
+val (a,b,c) = 여러_값이_들어있는_값
+
+val (value, description) = compute(7)
+```
+- 데이터 클래스를 사용하는 방법도 있다. 
+```kotlin
+data class Computation(
+        val data: Int,
+        val info: String
+)
+fun compute(input: Int): Computation =
+        if (input > 5) Computation(input * 2, "High")
+
+```
+- for 루프를 사용할 수도 있다
+```kotlin
+// mapOf(1 to "one", ...)
+for ((key, value) in map) { }
+// listOf(Pair(1, "one"), ...)
+for ((i, s) in listOfPairs) {}
+// listOf('a', 'b', 'c')
+for ((index, value) in list.withIndex()) {} // python의 enumerate
+```
+
