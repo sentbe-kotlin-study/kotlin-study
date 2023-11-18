@@ -165,3 +165,123 @@ for ((i, s) in listOfPairs) {}
 for ((index, value) in list.withIndex()) {} // python의 enumerate
 ```
 
+### 37. 널이 될 수 있는 타입
+- ㅋ코틀린에서 모든 타입은 기본적으로 널이 될 수 없는 타입이다.
+- 하지만 '?'를 붙여서 null을 허용할 수도 있다.
+- String과 String?은 다른 타입이다. 
+
+```kotlin
+val s1 = "abc"
+val s3: String? = null 
+```
+
+- null이 될 수 있는 타입의 멤버를 참조하는 경우, if문 검증이 필수다.
+```kotlin
+val s1: String? = "abc"
+s1.length eq 3 // compile x
+
+// 다음과 같이 if문 추가 필요 
+if (s!=null)
+    s1.length eq 3
+```
+
+### 38. 안전한 호출과 엘비스 연산자 
+- 안전한 호출은 일반 호출에 사용하는 점을 물음표와 점으로 바꾼 것이다. 
+- 안전한 호출을 사용하면 널이 될 수 있는 타입의 멤버에 접근하면서 아무 예외도 발생하지 않게 해준다. 
+```kotlin
+// 1
+if (s!=null)
+    s1.length else null
+//2
+s1?.length 
+```
+- 엘비스 연산자 : ?: 의 왼쪽 식의 값이 null이 아니면 왼쪽 식의 값이 결과값, null이면 오른쪽 식이 결과값
+```kotlin
+val s1: String? = "abc"
+(s1 ?: "---") eq abc // s1이 null이 아니면 s1, null이면 "---"
+```
+
+- 보통 안전한 호출 다음에 엘비스 연산자를 사용한다.
+```kotlin
+val length = s?.length ?: 0
+```
+
+### 39. 널 아님 단언
+- null이 될 수 없다고 주장하기 위해 느낌표 두개 (!!) 쓰는 것 == 널 아님 단언
+- x!! == x가 null일 수도 있단느 사실을 무시하라 -> x가 null이면 오류 
+```kotlin
+// 보통 역참조와 함께 쓰임
+fun main() {
+    val s: String? = "abc"
+    s!!.length eq 3
+}
+```
+_tip. 널 아님 단언을 사용하지 않고 안전한 호출이나 명시적인 null검사를 활용하자._
+
+### 40. 확장 함수와 널이 될 수 있는 타입
+- 코틀린이 제공하는 String의 확장함수 
+  - isNullOrEmpty()
+  - isNullOrBlank()
+
+```kotlin
+val s1: String? = null
+s1.isNullOrEmpty()
+```
+
+### 41. 제네릭스 소개
+- 제네릭스: 파라미터화한 타입 (여러 타입에 대해 작동할 수 있는 컴포넌트)
+```kotlin
+// 제네릭 타입 정의 
+class GenericHolder<T>(
+        private val value: T
+)
+```
+- 유니버셜 타입: 모든 타입의 부모 타입 (Any)
+```kotlin
+// 유니버셜 타입 정의 
+class AnyHolder(
+        private val value: Any
+)
+```
+- 간단한 경우에는 Any가 작동하나 구체적인 타입이 필요해지면 (Dog의 bark() 호출) 제대로 작동하지 않는다.
+- 여기서 제네릭스를 사용하면 Dog 추론 가능!
+```kotlin
+fun <T> identity(arg: T): T = arg
+```
+
+### 42. 확장 프로퍼티
+- 확장 함수처럼 확장 프로퍼티를 정의할 수도 있다.
+```kotlin
+// 커스텀 게터가 필요하다.
+val String.indices: IntRange
+  get() = 0 until length
+
+fun main() {
+    "abc".indices eq 0..2
+}
+```
+
+_tip. 기능이 단순하고 가독성을 향상시키는 경우에만 프로퍼티를 권장한다._
+
+- 제네릭 확장 프로퍼티를 정의할 수도 있다.
+```kotlin
+val <T> List<T>.firstOrNull: T?
+  get() = if (isEmpty()) null else this[0]
+```
+
+##### * (star projection)
+- *는 어떤 타입이 들어올지 미리 알 수 없어도 그 타입을 안전하게 사용하고 싶을 때 사용한다. -> 타입은 중요하지 않고 읽기만 하는 경우 등에 사용한다. 
+- 언제든지 모든 타입을 받을  수 있는 Any와 다르게 한번 구체적인 타입이 정해지고 나면 해당 타입만 받을 수 있다.
+- Any: 모든 타입 가능, *: 그저 타입이 정해지지 않았을 뿐이다.
+
+```kotlin
+fun printValues(values: Array<*>) {
+    for (value in values) {
+        println(value)
+    }
+    values[0] = values[1] // ERROR (T는 가능)
+}
+```
+
+### 43. break와 continue
+- break나 continue를 사용하는 대신 이터레이션 조건을 명시적으로 작성해라.
