@@ -15,6 +15,6 @@ fun main() {
     }
 
     println(counter.value) // [1]
-    // println(counter.value++) // [2]
+    //println(counter.value++) // [2]
     println(counter.value2++) // [3]
 }
