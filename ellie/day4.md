@@ -195,3 +195,46 @@ fun main() {
   * isNullOrBlank() : isNullOrEmpty() + 온전한 공백 문자(space, tab, newline) 로만 구성되어 있는지 검사한다.
 ----
 ## 41. 제네릭스 소개
+* 자바의 제네릭 타입과 비슷함, `<T>` 사용.
+* 코틀린에서는 Any가 유니버셜 타입 (모든 타입의 부모 타입)
+* 제네릭 타입 : 객체를 함수의 인자로 넘겼을 때 속성이 유지됨(호출이 가능) 
+* 유니버셜 타입 : 객체를 함수 인자로 넘길을 때 유니버셜 타입으로 대입되면서 기존 객체의 속성을 불러올 수 없음.
+* 제네릭 함수 : 제네릭 함수를 정의하려면 부등호로 둘러싼 제네릭 타입 파라미터를 함수 이름 앞에 붙인다.
+```kotlin
+fun <T> identity(arg: T): T = arg
+```
+----
+## 42. 확장 프로퍼티
+* 40 에서 확장 함수를 정의 한 것 처럼, 확장 프로퍼티를 정의할 수 있다.
+* Quiz
+```kotlin
+val <T> List<T>.firstOrNull: T?
+    get() = if (isEmpty()) null else this[0]
+
+fun main() {
+    println(listOf(1,2,3).firstOrNull) // ??
+    println(listOf<String>().firstOrNull) // ??
+}
+```
+----
+## 43. break와 continue
+* 익히 아는 그것.
+* 루프문 안에서 `제한적인 점프`를 제공한다.
+* **레이블** : 여러 루프의 경계 중 한군데로 점프할 수 있다.
+* 레이블 문법 : `레이블@`
+* Quiz
+```kotlin
+fun main() {
+    val strings = mutableListOf<String>()
+
+    outer@ for(c in 'a'..'b') {
+        for (i in 1..3) {
+            if(i==2) continue@outer
+            if("$c$i" == "b3") break@outer
+            strings.add("$c$i")
+        }
+    }
+
+    println(strings.toString()) // ??
+}
+```
