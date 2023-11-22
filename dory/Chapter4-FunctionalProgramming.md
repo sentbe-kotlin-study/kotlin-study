@@ -65,3 +65,33 @@ fun main() {
     list.filter { it % divider == 0}.forEach{ sum += it } // 외부변수 sum을 참조하고 변경한다.
 }
 ```
+
+### 46. 컬렉션에 대한 연산
+
+> 함수형 프로그래밍은 객체 컬렉션에 대한 연산을 한꺼번에 수행할 수 있는 능력이 중요하다.
+
+람다를 이용한 리스트 초기화 방법들
+
+```kotlin
+val list1 = List(10) { it }
+val list2 = List(10) { 0 }
+val list3 = List(10) { 'a' + it }
+val list4 = List(10) { list3[it % 3] }
+```
+
+```kotlin
+val mutableList1 = MutableList(5, {10 * (it + 1)})
+val mutableList2 = MutableList(5) {10 * (it + 1)}
+// 결과는 동일하게 [10, 20, 30, 40, 50]
+```
+
+##### 람다의 함수들
+
+- filter(): 주어진 술어와 일치하는 모든 원소가 들어 있는 새 리스트 생성
+- any(): 원소 중 어느 하나에 대해 술어가 true -> true
+- all(): 모든 원소가 술어와 일치
+- none(): 술어와 일치하는 원소가 하나도 없는지
+- find(): 술어와 이치하는 첫번째 원소
+- lastOrNull(): 술어와 일치하는 마지막 원소
+- count(): 술어와 일치하는 원소의 개수
+- partition(): 술어를 만족하는 원소들과 만족하지 않는 원소들 -> Pair
