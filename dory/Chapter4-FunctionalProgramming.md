@@ -158,3 +158,21 @@ fun main() {
 ```kotlin
 val isPlus: (Int) -> Boolean = { it > 0 }
 ```
+
+### 49. 리스트 조작하기
+
+##### 묶기
+
+- zip()은 두 list의 원소를 하나씩 짝짓는 방식으로 묶는다.
+- 두 시퀀스 중 어느 한쪽이 끝나면 묶기 연산도 끝난다.
+
+```kotlin
+[(a, 0), (b, 1), ...]
+```
+
+- zipWithNext()는 인접한 다음 원소를 묶는다.
+
+##### 평평하게 하기
+
+- flatten(): list 안 list 를 flat
+- flatMap(): map + flatten
