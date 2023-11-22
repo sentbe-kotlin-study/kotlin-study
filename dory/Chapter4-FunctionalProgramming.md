@@ -95,3 +95,58 @@ val mutableList2 = MutableList(5) {10 * (it + 1)}
 - lastOrNull(): 술어와 일치하는 마지막 원소
 - count(): 술어와 일치하는 원소의 개수
 - partition(): 술어를 만족하는 원소들과 만족하지 않는 원소들 -> Pair
+
+### 47. 멤버 참조
+
+함수 프로퍼티 생성자에 대해 만들 수 있는 멤버참조
+
+```kotlin
+data class Message(
+    val sender: String,
+    val text: String,
+    val isRead: Boolean
+)
+
+val unread = messages.filterNot(Message::isRead) // 멤버 참조
+```
+
+##### 함수 참조
+
+- 람다를 별도의 함수로 추출 -> 함수에 대한 참조를 넘김
+
+```kotlin
+fun Message.isImportant(): Boolean =
+    text.contains("Salary increase") ||
+        attachments.any {
+            it.type == "image"
+        }
+
+fun main() {
+    messages.any(Message::isImportant)
+}
+```
+
+##### 생성자 참조
+
+- 클래스 이름을 사용해 생성자에 대한 참조를 만든다.
+
+```kotlin
+data class Student(
+    val id: Int,
+    val name: String
+)
+// index를 id, 이름을 name
+names.mapInddexed(::Student)
+```
+
+##### 확장함수 참조
+
+참조 앞에 확장 대상 타입 붙이기
+
+```kotlin
+fun Int.times47() = times(47)
+
+fun main() {
+    goInt(12, Int::times47)
+}
+```
