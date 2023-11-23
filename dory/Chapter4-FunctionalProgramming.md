@@ -215,3 +215,90 @@ fun main() {
 }
 ```
 
+### 52. 지역 함수
+- 지역 함수: 다른 함수 안에 정의된 이름 붙은 함수
+```kotlin
+fun main() {
+    val logMsg = StringBuilder()
+    fun log(message: String) = logMsg.appendLine(message) // main 함수 안에 내포
+}
+```
+
+- 익명함수: 이름이 없는 함수
+```kotlin
+fun main() {
+    sessions.any (
+            fun(session: Session): Boolean { // 익명 함수
+                if (session.title.contains("Kotlin") && session.speaker in favoriteSpeakers) {
+                    return true
+                }
+              return false
+            })
+}
+```
+
+##### 레이블
+람다를 둘러싼 함수가 아니라 람다에서만 반환해야 한다면 레이블이 붙은 return을 사용해라!
+
+```kotlin
+fun main() {
+    // case 1
+    val list = listOf(1,2,3,4,5)
+    val value = 3
+    val result = ""
+    list.forEach {
+        result += "$it"
+        if (it == value) {
+            result eq "123"
+            return // main 함수를 끝낸다!!
+        }
+    }
+  
+    // case2
+    val list = listOf(1,2,3,4,5)
+    val value = 3
+    val result = ""
+    list.forEach {
+      result += "$it"
+      if (it == value) {
+        result eq "123"
+        return@forEach // forEach까지만 반환
+      }
+    }
+}
+```
+
+- 지역함수 조작하기
+```kotlin
+// 익명함수 
+fun first(): (Int) -> Int {
+  val func = fun(i: Int) = i + 1
+  func(1) eq 2
+  return func
+}
+
+// 람다
+fun second(): (String) -> String {
+  val func2 = { s: String → “$s!” }
+  func2("abc") eq "abc!"
+  return func
+}
+
+// 지역함수 
+fun third(): () -> String {
+  fun greet() = “Hi!”
+  return ::greet
+}
+
+fun main() {
+  val funRef1: (Int) -> Int = first()
+  val funRef2: (String) -> String = second()
+  val funRef3: () -> String = third()
+  
+  funRef1(42) eq 43
+  funRef2("xyz") eq "xyz!"
+  funRef3() eq "Hi!"
+}
+```
+
+
