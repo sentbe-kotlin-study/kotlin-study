@@ -195,3 +195,23 @@ fun main() {
 }
 ```
 
+### 51. 시퀀스
+- 즉시계산: 모든 원소에 대해 바로 계산이 이루어짐
+  - ex. 필터링 -> 맵 -> any
+- 지연계산: 결과가 필요할 때만 계산을 수행한다.
+  - ex. 원소와 연관된 값만 계산
+
+List를 시퀀스로 변경하면 지연 계산이 활성화 됨 !!  -> 더 적은 연산
+
+```kotlin
+list.asSequence()
+```
+
+- generateSequence(): 자연수로 이루어진 무한 시퀀스를 만든다
+```kotlin
+fun main() {
+    val naturalNumbers = generateSequence(1) { it+1} // 1부터 하나씩 증가시켜라
+    naturalNumbers.take(3).toList() // 3개까지 리스트로 출력 (1, 2, 3)
+}
+```
+
