@@ -319,3 +319,39 @@ chars.reduce { acc, e -> "$acc $e" } eq "A B C D E"
 chars.reduceRight { e, acc -> "$acc $e" } eq "E D C B A"
 ```
 - runningFold(), runningReduce(): 모든 중간 단계값을 포함하는 리스트를 만들어낸다.
+
+
+### 54. 재귀
+- 재귀는 함수 안에서 함수 자신을 호출하는 프로그래밍 기법이다.
+- 꼬리 재귀는 일부 재귀 함수에 명시적으로 적용할 수 있는 최적화 방법이다.
+  - stack over flow 방지 -> 호출 스택을 줄이자!
+  - 자원 소비가 적은 루프 코드로 컴파일 해준다!
+
+```kotlin
+// 꼬리재귀 가능
+fun factorial(n: Int, acc: Int): Int {
+    return if (n <= 0) {
+        acc
+    } else {
+        factorial(n-1, n*acc) // 본인만 호출
+    }
+}
+
+// 꼬리재귀 불가!
+fun factorial_plus_n(n: Int, acc: Int): Int {
+  return if (n <= 0) {
+    acc
+  } else {
+    1 + factorial_plus_n(n-1, n*acc) // 다른 연산 수행 
+  }
+}
+
+// tailrec: 꼬리재귀 
+tailrec factorial(n: Int, acc: Int): Int {
+  return if (n <= 0) {
+    acc
+  } else {
+    factorial(n-1, n*acc)
+  }
+}
+```
