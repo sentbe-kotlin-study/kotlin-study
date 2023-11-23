@@ -176,3 +176,22 @@ val isPlus: (Int) -> Boolean = { it > 0 }
 
 - flatten(): list 안 list 를 flat
 - flatMap(): map + flatten
+
+
+### 50. 맵 만들기
+맵을 사용하면 키를 사용해 값에 빠르게 접근 가능
+- groupBy(): 원소를 분류하는 기준을 키로 삼아 map을 만든다
+- associateWith(): 리스트 원소를 키로 하는 맵
+
+```kotlin
+fun main() {
+    val map: Map<Int, List<Person>> = people().groupBy(Person::age)
+    map[15] eq listOf(Person("Arth", 15))
+    
+    val map: Map<Person, String> = people().associateWith { it.name }
+    map eq mapOf(
+            Person("Alice", 21) to "Alice"
+    )
+}
+```
+
