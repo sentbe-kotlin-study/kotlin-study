@@ -301,4 +301,21 @@ fun main() {
 }
 ```
 
-
+### 53. 리스트 접기
+- fold()는 리스트의 모든 원소를 순서대로 조합해 결괏값을 하나 만들어낸다.
+- foldRight(): fold와 다르게 원소를 오른쪽 -> 왼쪽
+```kotlin
+fun main() {
+    val list = listOf(1, 10, 100, 1000)
+    list.fold(0) { sum, n ->  // right의 경우엔 n, sum 
+        sum + n // 0, 1, 1 -> 1, 10, 11 -> 11, 100, 111 -> 111, 1000, 1111 
+    } eq 1111
+}
+```
+- ruduce(): 첫번째 원소를 초기값으로 사용
+- ruduceRight(): 마지막 원소를 초기값으로 사용
+```kotlin
+chars.reduce { acc, e -> "$acc $e" } eq "A B C D E"
+chars.reduceRight { e, acc -> "$acc $e" } eq "E D C B A"
+```
+- runningFold(), runningReduce(): 모든 중간 단계값을 포함하는 리스트를 만들어낸다.
