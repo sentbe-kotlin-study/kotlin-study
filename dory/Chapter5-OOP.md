@@ -49,3 +49,32 @@ fun delayAction(action: Action) {
     action.act()
 }
 ```
+
+### 56. 복잡한 생성자
+- val이나 var은 파라미터 목록에 있는 파라미터에 붙이면, 그 파라미터를 프로퍼티로 만들어준다.
+```kotlin
+fun Alien(val name: String)
+
+fun main() {
+    val alien = Alien("Pencilvester")
+    alien.name eq "Pencilvester"
+}
+```
+- 생성 과정을 제어하고 싶으면 클래스 본문에 생성자 코드를 추가해라.
+```kotlin
+class Message(text: String) {
+    private val content: String
+    init { 
+        counter += 10
+        content = "[$counter] $text"
+    }
+    override fun toString() = content
+}
+
+fun main() {
+    val m1 = Message("big")
+    m1 eq "[10] big"
+    val m2 = Message("hi")
+    m2 eq "[20] hi"
+}
+```
