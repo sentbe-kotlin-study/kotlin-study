@@ -78,3 +78,25 @@ fun main() {
     m2 eq "[20] hi"
 }
 ```
+
+### 57. 부생성자
+- 오버로드한 생성자를 <b>부생성자</b>라고 한다.
+
+```kotlin
+class WithSecondary(i: Int) {
+    // 주생성자
+    init {
+        trace("Primary: $i")
+    }
+    // 부생성자
+    constructor(c: Char): this(c-'A') {
+        trace("Secondary: '$c'")
+    }
+  // 부생성자2
+    constructor(s: String){
+      this(s.first()) 
+      trace("Secondary: '$c'")
+    }
+}
+```
+- 주생성자는 언제나 부생성자에 의해 직접 호출되거나 다른 부생성자 호출을 통해 간접적으로 호출되어야 한다.
