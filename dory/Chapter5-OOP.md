@@ -140,3 +140,18 @@ class Bonobo: GreatApe() {
     fun run() = "Bonobo run"
 }
 ```
+
+### 59. 기반 클래스 초기화
+- 부모 클래스에 생성자 파라미터가 있다면, 자식 클래스가 생성되는 동안 반드시 부모 클래스의 생성자 인자를 제공해야 한다.
+- 자식 클래스는 부모 클래스의 부생성자를 호출할 수도 있다.
+
+```kotlin
+open  class GreatApe (
+        val weight: Double,
+        val age: Int
+)
+
+open class Bonobo(weight: Double, age: Int):
+    GreatApe(weight, age)
+```
+
