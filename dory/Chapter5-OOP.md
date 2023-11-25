@@ -155,3 +155,43 @@ open class Bonobo(weight: Double, age: Int):
     GreatApe(weight, age)
 ```
 
+### 60. 추상 클래스
+- 클래스 멤버에서 본문이나 초기화를 제거하려면 abstract 변경자를 해당 멤버 앞에 붙여야 한다.
+```kotlin
+abstract class WithProperty {
+    abstract val x: Int
+}
+```
+- 인터페이스와 추상 클래스 차이점
+  - 추상 클래스에는 상태가 있으나, 인터페이스에는 상태가 없다.
+  - 상태: 프로퍼티 안에 저장된 데이터를 의미한다.
+
+### 61. 업캐스트
+- 업캐스트: 객체 참조를 받아서 그 객체의 기반 타입에 대한 참조처럼 취급하는 것
+
+```kotlin
+interface Shape {
+    fun draw(): String
+    fun erase(): String
+}
+
+class Circle: Shape {
+    override fun draw(): String {TODO("Not yet implemented") } 
+    override fun erase(): String {TODO("Not yet implemented")}
+}
+
+class Square: Shape {
+  override fun draw(): String {TODO("Not yet implemented") }
+  override fun erase(): String {TODO("Not yet implemented")}
+}
+
+fun show(shape: Shape) {
+    trace("")
+}
+
+fun main() {
+    listOf(Circle(), Square()).forEach(::show) // 각 타입은 모두 shape 클래스의 객체처럼 취급 -> 업캐스트 
+}
+```
+
+<b>실제로 업캐스트를 사용하지 않는데 상속을 사용하는 거의 모든 경우는 상속을 잘못 사용하는 것이다!</b>
