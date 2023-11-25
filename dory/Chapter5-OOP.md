@@ -100,3 +100,43 @@ class WithSecondary(i: Int) {
 }
 ```
 - 주생성자는 언제나 부생성자에 의해 직접 호출되거나 다른 부생성자 호출을 통해 간접적으로 호출되어야 한다.
+
+### 58. 상속
+- 상속: 기존 클래스를 재사용하면서 변경해 새로운 클래스를 만드는 매커니즘
+```kotlin
+// 상속가능 : open
+open class Parent
+
+clas Child : Parent()
+
+// 상속 불가 
+final class Single
+class AnotherSingle
+```
+- 함수 오버라이드하기
+
+```kotlin
+open class GreatApe {
+  protected val energy = 0 // 외부 세계에 대해 닫혀 있고, 하위 클래스에서만 접근이나 오버라이드 가능
+  open fun call() = "Hoo!"
+  open fun eat() {
+    energy += 10
+  }
+  fun climb(x: Int) {
+    energy -= x
+  }
+  fun energyLevel() = "Energy: $energy"
+}
+
+class Bonobo: GreatApe() {
+    override fun call() = "Eep!"
+    override fun eat() {
+        // 부모 클래스의 프로퍼티를 변경한다.
+        energy += 10
+        // 부모 클래스의 함수를 호출한다
+        super.eat()
+    }
+    // 함수를 호출한다.    
+    fun run() = "Bonobo run"
+}
+```
