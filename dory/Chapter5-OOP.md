@@ -195,3 +195,64 @@ fun main() {
 ```
 
 <b>실제로 업캐스트를 사용하지 않는데 상속을 사용하는 거의 모든 경우는 상속을 잘못 사용하는 것이다!</b>
+
+### 62. 다형성
+- 다형성: 부모 클래스 참조가 자식 클래스의 인스턴스를 가리키는 경우 발생한다.
+
+```kotlin
+import kotlin.contracts.contract
+
+abstract class Character(val name: String) {
+    abstract fun play(): String
+}
+
+interface Fighter {
+    fun fight() = "Fight"
+}
+
+interface Magician {
+    fun doMagic() = "Magic!"
+}
+
+class Warrior :
+    Character("Warrior"), Fighter {
+        override fun play() = fight() 
+    }
+
+open class Elf(name: String = "Elf"):
+        Character(name), Magician {
+            override fun play() = doMagic()
+}
+
+class FightingElf :
+        Elf("FightingElf"), Fighter {
+            override fun play() = super.play() + fight()
+        }
+
+fun Character.playTurn() = 
+        trace(name + ":" + play())
+
+fun main() {
+    val characters: List<Character> = listOf(
+            Warrior(), Elf(), FightingElf()
+    )
+  characters.forEach { it.playTurn() }
+  trace eq """
+    Warrior: Fight!
+    Elf: Magic!
+    FightingElf: Magic!Fight!
+  """
+}
+```
+
+### 63. 합성
+- 기좆 클래스의 객체를 새 클래스 안에 생성하는 좀 더 직접적인 접근 방법을 택할 수도 있다. -> 합성
+- 합성을 쓸 경우는 기본 코드의 기능을 재사용하는 것이다.
+
+```kotlin
+// 상속: 집은 건물이다
+// 합성: 부엌을 포함한다. 
+interface House: Building {
+    val kitchen: Kitchen
+}
+```
