@@ -256,3 +256,39 @@ interface House: Building {
     val kitchen: Kitchen
 }
 ```
+
+### 64. 상속과 확장
+- 기존 클래스를 새로운 목적으로 활용하기 위해 새로운 함수를 추가해야 할 때가 있다.
+- 이때 기존 클래스를 변경할 수 없으면 새 함수를 추가하기 위해 상속을 사용해야 한다.
+- 이로 인해 코드를 이해하고 유지 보수하기 어려워진다.
+
+```kotlin
+open class Heater {
+    fun heat(temperature: Int) = "heating to $temperature"
+}
+
+fun warm(heater: Heater) {
+    heater.heat(70) eq "heating to 70"
+}
+
+class HVAC : Heater() {
+    fun cool(temperature: Int) = "cooling to $temperature"
+}
+```
+
+### 65. 클래스 위임
+- 클래스 위임은 상속과 합성의 중간 지점이다.
+  - 새 클래스 안에 멤버 객체를 심고, 상속과 마찬가지로 심겨진 하위 객체의 인터페이스를 노출시킨다.
+
+```kotlin
+// 클래스 위임
+interface AI
+class A: AI 
+
+class B(val a: A) : AI by a
+```
+
+- 클래스 위임을 사용해 다중 클래스 상속을 흉내낼 수 있다.
+
+### 66. 다운캐스트
+
