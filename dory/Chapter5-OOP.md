@@ -315,3 +315,56 @@ class B(val a: A) : AI by a
 
 - 다운 캐스트는 이전에 업캐스트 했던 객체의 구체적인 타입을 발견한다.
 - 다운 캐스트는 실행 시점에 일어나며 실행 시점 타입 식별이라고도 한다.
+
+### 67. 봉인된 클래스 
+- sealed 키워드로 상속을 제한한 클래스를 봉인된 클래스라고 부른다.
+  - sealed 클래스를 직접 상속한 하위 클래스는 반드시 기반 클래스와 같은 패키지와 모듈 안에 있어야 한다.
+  - sealed 클래스는 tram 같은 새 하위 클래스를 도입했을 때 변경해야 하는 모든 지점을 표시해준다.
+
+```kotlin
+sealed class Transport 
+
+data class Train(
+        val line: String
+) : Transport()
+
+data class Bus(
+        val number: String,
+        val capacity: Int
+) : Transport()
+
+// else가 필요없어짐 -> sealed가 관리하기 때문에
+fun travel(transport: Transport) = 
+        when (transport) {
+            is Train -> 
+                "Train ${transport.line}"
+            is Bus -> 
+                "Bus ${transport.number}: " +
+                        "size ${transport.capacity}"
+        }
+
+fun main() {
+    listOf(Train("S1"), Bus("11", 90))
+            .map(::travel) eq "[Train S1, Bus 11: size 90]"
+}
+```
+
+- sealed 클래스는 기본적으로 하위 클래스가 모두 같은 파일 안에 정의되어야 한다는 제약이 가해진 abstract 클래스다.
+- 그러나 직접적 상속이 아니면 다른 파일에 있을 수도 있음! 
+
+##### 하위 클래스 열거하기
+- Top의 직접적인 하위클래스만 나타남!
+```kotlin
+sealed class Top
+class Middle1 : Top()
+class Middle2 : Top()
+open class Middle3 : Top()
+class Bottom3 : Middle3()
+
+fun main() {
+    Top::class.sealedSubclasses
+            .map { it.simpleName } eq
+            "[Middle1, Middle2, Middle3]"
+}
+```
+
