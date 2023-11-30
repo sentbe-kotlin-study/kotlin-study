@@ -510,3 +510,36 @@ fun upgrade(): Ticket {
     return Ticket(name, newSeat)
 }
 ```
+
+### 70. 객체
+- object는 논리적으로 한 개체 안에 속한 함수와 프로퍼티를 함께 엮는 방법이다.
+  - object의 인스턴스를 직접 생성하는 경우느 결코 없다.
+  - object를 정의하면 그 object의 인스턴스가 오직 하나만 생긴다.
+
+```kotlin
+object JustOne {
+    val n = 2
+    fun f() = n * 10
+    fun g() = this.n * 20 
+}
+
+//- JustOne()을 사용해 새 인스턴스를 만들 수 없다. 
+// object 키워드가 구조 정의와 동시에 객체를 생성해버리기 때문이다.
+fun main() {
+   // val x = JustOne() 오류남
+    JustOne.n == 2
+}
+```
+
+```kotlin
+// 인터페이스 상속도 가능!
+interface PaintPreparation {
+    fun prepare(): String
+}
+
+object Prepare: PaintPreparation {
+    override fun prepare() = "Scrape"
+}
+```
+
+
