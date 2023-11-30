@@ -368,3 +368,64 @@ fun main() {
 }
 ```
 
+### 68. 타입 검사
+> 코틀린에서는 객체 타입에 기반해 원하는 동작을 쉽게 수행할 수 있다. 일반적으로 이런 타입에 따른 동작은 다형성의 영역에 속하므로 타입 검사를 통해 흥미로운 설계를 할 수 있다.
+
+```kotlin
+// 타입 체킹을 위해 when 식 추가 -> 그러나 타입이 늘어나게 되면 코드가 점점 지저분해진다!
+fun Insect.water() = 
+        when (this) {
+          is SwimmingInsect -> swim()
+          is WalterWalker -> walkWater()
+          else -> "$name: drown"
+        }
+```
+
+###### 외부 함수에서 타입 검사하기
+
+```kotlin
+interface BeverageContainer {
+    fun open(): String
+    fun pour(): String
+}
+
+fun BeverageContainer.recycle() =
+        when(this) {
+            is Can -> "Recycle"
+            is GlassBottle -> "Recycle glass"
+            else -> "Landfill"
+        }
+```
+
+- 이 설계의 문제점
+  - 새 타입 추가시 else 절 사용 -> 꼭 수정해야 하는 함수를 수정하지 않는 경우 
+  - 컴파일러가 recycle() 같은 함수에서 타입 검사를 추가하지 않았음을 알려줄 필요가 있다! -> sealed 클래스 사용
+
+```kotlin
+sealed class Shape {
+    fun draw() = "$name: Draw"
+}
+
+class Circle : Shape()
+
+class Square : Shape() {
+    fun rotate() = "Square: Rotate"
+}
+
+,,,
+
+// else 필요없음 
+fun turn(s: Shape) = when(s){
+    is Circle -> ""
+    is Square -> ""
+}
+```
+
+- 하지만 sealed 클래스를 사용할 경우 -> 상속의 상속을 하는 .. 자손 클래스는 알수가 없음 ㅠㅠ 
+- when절 안에 또 when 절,,
+
+```kotlin
+interface BeverageContainer {
+    fun recycle(): String // 여기 안에 넣어요~!!
+}
+```
