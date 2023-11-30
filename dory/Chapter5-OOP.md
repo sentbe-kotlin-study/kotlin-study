@@ -542,4 +542,103 @@ object Prepare: PaintPreparation {
 }
 ```
 
+### 71. 내부 클래스
+- 내부 클래스는 내포된 클래스와 비슷하지만, 내부 클래스의 객체는 자신을 둘러싼 클래스의 인스턴스에 대한 참조를 유지한다.
+```kotlin
+class Hotel(private val reception: String) {
+    open inner class Room(val id: Int=0) {
+        fun callReception() = 
+                "Room $id Calling $reception" // 호텔의 reception 바로 사용 
+    }
+  private inner class Closet : Room() // 내포된 클래스는 이너 클래스 상속 불가 
+  fun closet(): Room = Closet()
+}
+```
 
+##### 한정된 this
+- 한정된 this : this 뒤에 @ 붙이고 대상 클래스 이름을 덧붙인 것 
+```kotlin
+class Fruit {
+    fun changeColor(color: String) = "Fruit $color"
+  inner class Seed {
+    fun changeColor(color: String) = "Seed $color"
+    fun whichThis() {
+        this.name eq "Seed"
+        this@Seed.name eq "Seed"
+        this@Fruit.name eq "Fruit"
+    }
+  }
+}
+```
+
+##### 내부 클래스 상속
+- 내부 클래스는 다른 외부 클래스에 있는 내부 클래스를 상속할 수 있다.
+```kotlin
+open class Egg {
+    private var yolk = Yolk()
+    open inner class Yolk {
+        init { trace("Egg.Yolk()") }
+        open fun f() { trace("Egg.Yolk.f()") }
+    }
+}
+
+class BigEgg : Egg() {
+    inner class Yolk : Egg.Yolk() { // 내부 클래스를 상속!!
+        init {
+            trace("BigEgg.Yolk()")
+        }
+    }
+}
+```
+
+##### 지역 내부 클래스와 익명 내부 클래스
+- 멤버 함수 안에 정의된 클래스를 지역 내부 클래스라고 한다.
+- 이런 클래스를 객체 식이나 SAM 변환을 사용해 익명으로 생성할 수도 있다.
+
+```kotlin
+fun interface Pet {
+    fun speak(): String
+}
+
+object CreatePet {
+    fun home() = "home!"
+    fun dog(): Pet {}
+        val say = "Bark"
+        // 지역 내부 클래스
+        class Dog : Pet {
+            override fun speak() = say + home()
+        }
+    return Dog()
+}
+
+fun cat() : Pet {
+    val emit = "Meow"
+    // 익명 내부 클래스
+    return object: Pet {
+        override fun speak() = emit + home()
+    }
+}
+```
+
+
+### 72. 동반 객체
+- companion object 안에 있는 함수와 필드는 클래스에 대한 함수와 필드다.
+  - 클래스 안에서 동반 객체를 정의하면 클래스의 내부에서 동반 객체 원소를 투명하게 참조 가능!
+```kotlin
+class WithCompanion {
+    companion object {
+        val i = 3
+        fun f() = i * 3
+    }
+    fun g() = i + f()
+}
+```
+- 동반 객체는 클래스 당 하나만 생성이 가능하다!
+
+```kotlin
+clas WithNamed {
+    companion objet Named { // 이름 설정 가능 
+        fun s() = "from named"
+    }
+}
+```
