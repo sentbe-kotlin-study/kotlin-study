@@ -429,3 +429,84 @@ interface BeverageContainer {
     fun recycle(): String // 여기 안에 넣어요~!!
 }
 ```
+
+### 69. 내포된 클래스
+- 내포된 클래스는 클래스 안의 클래스!
+
+```kotlin
+// plane은 Airport 안 클래스이다!
+class Airport(private val code: String) {
+    open class Plane {
+        fun contact(airport: Airport) = "Contacting ${airport.code}"
+    }
+    private class PrivatePlane : Plane()
+    fun privatePlane(): Plane = PrivatePlane()
+}
+```
+
+- 일반 클래스는 다른 클래스의 private 프로퍼티에 접근할 수 없다.
+  - PrivatePlane은 Airport 밖에서는 절대로 볼 수 없다는 뜻!
+
+```kotlin
+fun main() {
+    val denver = Airport("DEN")
+    var plane = Plane()
+    plane.contact(denver)
+    // 밑에는 불가임
+    val p = plane as PrivatePlane
+}
+```
+
+##### 지역 클래스
+- 함수 안에 내포된 클래스를 지역 클래스라고 한다.
+
+```kotlin
+fun localClasses() { 
+    open class Amphibian 
+    class Frog : Amphibian()
+    val amphibian: Amphibian = Frog()
+}
+
+fun createAmphibian() : Amphbian {
+    val Frog : Amphibian
+    return Frog()
+}
+```
+##### 인터페이스에 포함된 클래스
+
+```kotlin
+import java.lang.reflect.Type
+
+interface Item {
+  val type: Type
+  data class Type(val type: String)
+}
+
+class Bolt(type: String) : Item {
+    override val type = Item.Type(type)
+}
+```
+
+##### 내포된 이넘
+- 이넘도 클래스이므로 다른 클래스 안에 내포될 수 있다
+```kotlin
+class Ticket(
+        val name: String,
+        val seat: Seat = Coach
+) {
+    enum class Seat {
+        Coach,
+        Premium,
+        Business,
+        First
+    }
+}
+
+fun upgrade(): Ticket {
+    val newSeat = values()[
+            (seat.ordinal +1)
+                    .coerceAtMost(First.ordinal) //  호출된 객체가 특정 객체보다 작은지 
+    ]
+    return Ticket(name, newSeat)
+}
+```
