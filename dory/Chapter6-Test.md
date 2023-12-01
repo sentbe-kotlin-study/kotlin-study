@@ -129,3 +129,18 @@ fun createResultFile(create: Boolean) {
 ##### assert()
 - 주로 테스트할 때 사용한다!
 - 개발자가 assert() 검사를 활성화하거나 비활성화 할 수 있다
+
+### 75. Nothing 타입 
+- Nothing은 함수가 결코 반환되지 않는다는 사실을 표현하는 반환타입이다.
+
+```kotlin
+// 결코 반환되지 않는 무한루프 
+fun infinite(): Nothing {
+    while(true) {}
+}
+
+// 항상 예외를 던지기 때문에 nothing
+fun fail(i: Int): Nothing = throw Exception("fail")
+
+val listNone: List<Nothing?> = listOf(null) // 널이 될 수 있는 모든 타입
+```
