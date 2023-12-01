@@ -144,3 +144,30 @@ fun fail(i: Int): Nothing = throw Exception("fail")
 
 val listNone: List<Nothing?> = listOf(null) // 널이 될 수 있는 모든 타입
 ```
+
+### 76. 자원 해제
+- use()는 인자로 받은 코드 블록을 실행하고, 그 블록을 어떻게 빠져나왔는지와 관계없이 객체의 close()를 호출한다.
+- use()는 모든 예외를 다시 던져주기 때문에 프로그램에서는 여전히 예외를 처리해야 한다.
+
+```java
+// 자바의 try~catch문
+static readFirstLine(String path) throws IOException{
+    BufferedReader br = new BufferedReader(new FileReader(path));
+    try {
+        return br.readLine;
+    }finally {
+        br.close(); // 메모리 누수를 방지하기 위해 닫아준다!
+    }
+}
+```
+
+- 그러나 예외처리가 점점 많아지면 코드가 복잡해짐
+- 이걸 간단하게 해결하기 위해 use() 사용
+
+```kotlin
+fun readFirstLine(path: String): String {
+    BufferedReader(FileReader(path)).use { br ->
+        return br.readLine()
+    }
+}
+```
