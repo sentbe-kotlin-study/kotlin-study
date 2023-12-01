@@ -82,3 +82,50 @@ fun main {
     }
 }
 ```
+
+
+### 74. 검사 명령
+##### require()
+- 사전 조건을 보장할 때 사용한다.
+- 함수 인자를 검증하기 위해 사용되며, 함수 본문 맨 앞에 위치하는 경우가 많다.
+- <b>IllegalArgumentException</b> 반환
+
+```kotlin
+data class Month(val monthNumber: Int) {
+  init {
+    require(monthNumber in 1..12) {
+      "Month out of range: $monthNumber"
+    }
+  }
+}
+```
+
+##### requireNotNull()
+- 첫번째 인자가 null인지 검사해 널이 아니면 그 값을 돌려준다.
+
+```kotlin
+fun notNull(n: Int?): Int {
+    requireNotNull(n) {
+        "notNull() argument cannot be null"
+    }
+  return n * 0
+}
+```
+
+##### check()
+- 사후조건을 검사한다.
+- 결과를 확신할 수 없는 복잡하고 긴 함수에서 사후 조건이 유용하다
+- IllegalStateException을 던진다.
+```kotlin
+fun createResultFile(create: Boolean) {
+    if (create)
+        resultFILE.writeText("Results\n# ok")
+    check(resultFile.exists()) {
+        "${resultFile.name} doesn't exist"
+    }
+}
+```
+
+##### assert()
+- 주로 테스트할 때 사용한다!
+- 개발자가 assert() 검사를 활성화하거나 비활성화 할 수 있다
