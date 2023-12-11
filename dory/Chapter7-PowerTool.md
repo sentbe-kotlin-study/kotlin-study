@@ -4,7 +4,25 @@
 - 확장 람다는 확장 함수와 비슷하다. 차이가 있다면 함수가 아니라 람다라는 점이다.
 
 ```kotlin
+class A {
+    fun af() = 1
+}
 
+class B {
+    fun bf() = 2
+}
+
+fun f1(lambda: (A, B) -> Int) = 
+    lambda(A(), B())
+)
+
+fun f2(lambda: A.(B) -> Int) =
+    A().lambda(B()) // a에서의 af + b에서의 bf    
+
+fun main() {
+    f1 { aa, bb -> aa.af() + bb.bf() }
+    f2 { af() + it.bf()}
+}
 ```
 
 ### 80. 영역 함수
