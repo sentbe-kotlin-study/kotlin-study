@@ -124,3 +124,23 @@ class OutBox<out T>(private val contents: T) {
 ### 82. 연산자 오버로딩
 - 연산자 오버로딩을 사용하면, 새로 만든 타입에 대해 + 같은 연산자에 의미를 부여하거나 기존 타입에 대해 작용하는 연산자에 추가로 의미를 부여할 수 있다. 
 
+```kotlin
+data class Num(val n: Int)
+// 연산자 오버로딩시 operator 붙여주기 
+operator fun Num.plus(rval: Num) = Num(n + rval.n)
+```
+
+- 연산자에 특별한 의미를 부여하면 좋은 경우가 있다.
+```kotlin
+data class Molecule(
+        val id: Int = idCount++,
+        val attached: Molecule? = null
+) {
+    companion object {
+        private var idCount = 0
+    } 
+    operator fun plus(other: Molecule) {
+        attached = other
+    }
+}
+``` 

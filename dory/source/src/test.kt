@@ -1,32 +1,45 @@
-open class UserApiException(
-        open val errorCode: ResultCode,
-        override val message: String?,
-        open val extraMessage: String? = null
-) : RuntimeException(message)
+// CreatingGenerics/CreatingGenericsSoln1.kt
+package creatingGenericsExercise1
 
-data class SystemException(
-        override val errorCode: ResultCode,
-        override val message: String,
-        override val extraMessage: String? = null
-) : UserApiException(errorCode, message, extraMessage) {
-    constructor(extraMessage: String?) : this(ResultCode.INTERNAL_SERVER_ERROR, ResultCode.INTERNAL_SERVER_ERROR.message, extraMessage)
+//제네릭 타입을 인수로 받는 Items라는 인터페이스 함수를 만드세요
+//
+//Items 인터페이스는 next() 라는 함수를 가집니다.
+//
+//이 함수는 null 을 리턴할 수 있습니다.
+//
+//이 함수는 제네릭 타입을 리턴 타입으로 가집니다
+//
+//itemIter 함수는 (정해지지 않은 갯수의) 여러개의 제네릭 타입을 생성자로 받는 함수 입니다.
+//
+//itemIter 함수는 또한 Items 인터페이스를 상속합니다.
+//
+//itemIter 함수는 Items<T> 객체를 리턴값 으로 가집니다.
+//
+//next()를 호출할 때마다 현재 element 가 생성되고 인덱스가 증가합니다.
+//
+//더 이상 항목이 없으면 next()는 null을 반환합니다.
+//
+//itemIter 함수 내부에 index 변수를 선언하면 편하게 문제를 풀 수 있습니다.
+
+// TODO
+fun interface Items<T> {
+    fun next(): T?
 }
 
-@Suppress("unused")
-enum class ResultCode(val message: String) {
-    SUCCESS("ok"),
-    INTERNAL_SERVER_ERROR("system error occurred!")
+fun <T> itemIter(vararg items: T): Items<T> {
+    var index = 0
+    return Items {
+        if( index >=  items.size) null
+        else items[index++]
+    }
 }
 
 fun main() {
-    try {
-        val s = "abc"
-        for (i in 0..s.lastIndex+1) {
-            print(s[i] + 1)
-        }
-    } catch (e: Exception) {
-        val customException = SystemException("String index out of range: 3")
-        assert("bcdSystemException(errorCode=INTERNAL_SERVER_ERROR, message=system error occurred!, extraMessage=String index out of range: 3)" == customException.toString())
-        e.printStackTrace()
-    }
+
+    val s = itemIter("A", "B", "C")
+    print((0..3).map { s.next() }.toString() == "[A, B, C, null]")
+    val i = itemIter(1, 2, 3, 4, 5, 6, 7)
+    print((0..10).mapNotNull { i.next() }.toString() ==
+            "[1, 2, 3, 4, 5, 6, 7]")
+
 }
