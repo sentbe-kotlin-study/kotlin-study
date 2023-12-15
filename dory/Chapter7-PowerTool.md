@@ -102,3 +102,7 @@ class OutBox<out T>(private val contents: T) {
     fun get(): T = contents
 }
 ```
+
+### 82. 연산자 오버로딩
+- 연산자 오버로딩을 사용하면, 새로 만든 타입에 대해 + 같은 연산자에 의미를 부여하거나 기존 타입에 대해 작용하는 연산자에 추가로 의미를 부여할 수 있다. 
+
