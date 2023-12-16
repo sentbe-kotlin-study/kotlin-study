@@ -14,7 +14,6 @@ class B {
 
 fun f1(lambda: (A, B) -> Int) = 
     lambda(A(), B())
-)
 
 fun f2(lambda: A.(B) -> Int) =
     A().lambda(B()) // a에서의 af + b에서의 bf    
@@ -147,4 +146,68 @@ data class Molecule(
 
 ##### 동등성
 - == (동등성)과 != (비동등성)은 equals() 멤버 함수를 호출한다. data 클래스는 자동으로 저장된 모든 필드를 서로 비교하는 equals()를 오버라이드 해준다.
-- 
+- 널이 될 수 있는 객체를 ==로 비교하면 코틀린은 널 검사를 강제한다. 
+
+```kotlin
+class E(var v: Int) {
+    override fun equals(other: Any?) = when {
+        this == other -> true
+}     
+}
+
+fun equalsWithIf(a: E?, b: E?) =
+        if (a === null)
+            b === null
+        else
+            a == b
+```
+
+##### 산술 연산자
+- class E에 대해 기본 산술 연산자를 확장으로 정의 가능
+```kotlin
+// 단항 연산자
+operator fun E.not() = this
+operator fun E.unaryMinus() = E(-v)
+operator fun E.unaryPlus() = E(v)
+// 증가 연산자
+operator fun E.inc() = E(v + 1)
+operator fun E.dec() = E(v - 1)
+```
+
+##### 비교 연산자
+- compareTo()를 정의하면 모든 비교 연산자를 쓸 수 있다.
+```kotlin
+operator fun E.compareTo(e: E): Int = v.compareTo(e.v)
+```
+
+##### 범위와 컨테이너
+- rangeTo()는 범위를 생성하는 .. 연산자를 오버로드하고, contains()는 값이 범위 안에 들어가는지 여부를 알려주는 in 연산을 오버로드한다.
+```kotlin
+data class R(val r: IntRange) {
+    override fun toString() = "R($r)"
+}
+
+fun main() {
+    val a = E(2)
+    val b = E(3)
+    (a in r) eq true // a.rangeTo(b)
+}
+```
+
+##### 컨테이너 원소 접근
+- get()과 set()은 각괄호([])를 사용해 컨테이너의 원소를 읽고 쓰는 연산을 정의한다.
+```kotlin
+data class C(val c: MutableList<Int>) {
+    override fun toString() = "C($c)"
+}
+
+operator fun C.contains(e: E) = e.v in c
+operator fun C.get(i: Int): E = E(c[i])
+```
+
+##### 역작은 따옴표로 감싼 함 수 이름 
+- 코틀린은 함수 이름을 역작은따옴표로 감싸는 경우, 함수 이름에 공백, 몇몇 비표준 글자, 예약어 등을 사용하는 것을 허용한다.
+```kotlin
+fun `A long name with spaces`() = Unit
+fun `*how* is this working?`() = Unit
+```
