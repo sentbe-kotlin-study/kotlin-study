@@ -211,3 +211,32 @@ operator fun C.get(i: Int): E = E(c[i])
 fun `A long name with spaces`() = Unit
 fun `*how* is this working?`() = Unit
 ```
+
+### 83. 연산자 사용하기
+- 실전에서 연산자를 오버로드하는 경우는 드물다. 연산자 오버로드는 보통 직접 라이브러리를 만들때만 사용한다.
+
+```kotlin
+fun main() {
+    val list = MutableList(10) { 'a' + it }
+    list[7] == 'h' // operator get()
+    list.get(8) eq 'i'
+}
+```
+
+##### 구조 분해 연산자
+- 구조 분해에 사용되는 함수를 의미한다.
+- component1(), component2()
+
+```kotlin
+class Duo(val x: Int, val y: Int) {
+    operator fun component1(): Int {
+        trace("component1()")
+        return x
+    }
+}
+```
+
+### 84. 프로퍼티 위임 
+- 프로퍼티는 접근자 로직을 위임할 수 있다.
+- by 키워드를 사용하면 프로퍼티를 위임과 연결할 수 있다.
+
