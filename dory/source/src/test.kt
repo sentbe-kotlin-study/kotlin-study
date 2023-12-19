@@ -1,45 +1,60 @@
-// CreatingGenerics/CreatingGenericsSoln1.kt
-package creatingGenericsExercise1
+import kotlin.reflect.KProperty
 
-//제네릭 타입을 인수로 받는 Items라는 인터페이스 함수를 만드세요
-//
-//Items 인터페이스는 next() 라는 함수를 가집니다.
-//
-//이 함수는 null 을 리턴할 수 있습니다.
-//
-//이 함수는 제네릭 타입을 리턴 타입으로 가집니다
-//
-//itemIter 함수는 (정해지지 않은 갯수의) 여러개의 제네릭 타입을 생성자로 받는 함수 입니다.
-//
-//itemIter 함수는 또한 Items 인터페이스를 상속합니다.
-//
-//itemIter 함수는 Items<T> 객체를 리턴값 으로 가집니다.
-//
-//next()를 호출할 때마다 현재 element 가 생성되고 인덱스가 증가합니다.
-//
-//더 이상 항목이 없으면 next()는 null을 반환합니다.
-//
-//itemIter 함수 내부에 index 변수를 선언하면 편하게 문제를 풀 수 있습니다.
+// 위임 속성, lazy 초기화 사용
+class Order {
+    // 사용자 정의 위임 속성을 사용하여 상품 가격 변경 기록
+    private var _itemPrices: Map<String, Double> by PriceChangeLogging(mapOf())
 
-// TODO
-fun interface Items<T> {
-    fun next(): T?
-}
+    // TODO: 주문한 상품 목록을 처음 액세스할 때만 실제로 상품 정보를 로드하도록 구현하세요. (lazy 초기화)
+    // 구현할 메서드 이름: loadOrderedItems
+    val orderedItems by lazy { loadOrderedItems() }
 
-fun <T> itemIter(vararg items: T): Items<T> {
-    var index = 0
-    return Items {
-        if( index >=  items.size) null
-        else items[index++]
+    // TODO: 주문한 총 가격을 계산하는 함수를 구현하세요.
+    // 구현할 메서드 이름: calculateTotalPrice
+    fun calculateTotalPrice(): Double {
+        return orderedItems.sumOf { _itemPrices.getValue(it.name) * it.quantity }
+    }
+
+    // 상품 정보 로드 시뮬레이션
+    private fun loadOrderedItems(): List<OrderedItem> {
+        return listOf(
+                OrderedItem("ProductA", 2),
+                OrderedItem("ProductB", 3),
+                OrderedItem("ProductC", 1)
+        )
     }
 }
 
+data class OrderedItem(val name: String, val quantity: Int)
+
+// 사용자 정의 위임 속성을 사용하여 가격 변경 내역 기록
+class PriceChangeLogging(initialPrices: Map<String, Double>) {
+    private var prices: Map<String, Double> = initialPrices
+
+    operator fun getValue(thisRef: Any?, property: KProperty<*>): Map<String, Double> {
+        return prices
+    }
+
+    operator fun setValue(thisRef: Any?, property: KProperty<*>, value: Map<String, Double>) {
+        val oldPrices = prices
+        prices = value
+        logPriceChanges(oldPrices, value)
+    }
+
+    private fun logPriceChanges(oldPrices: Map<String, Double>, newPrices: Map<String, Double>) {
+        for ((product, oldPrice) in oldPrices) {
+            val newPrice = newPrices[product]
+            if (oldPrice != newPrice) {
+                println("가격 변경: $product, 이전 가격: $oldPrice, 새로운 가격: $newPrice")
+            }
+        }
+    }
+}
+
+// Example usage:
 fun main() {
-
-    val s = itemIter("A", "B", "C")
-    print((0..3).map { s.next() }.toString() == "[A, B, C, null]")
-    val i = itemIter(1, 2, 3, 4, 5, 6, 7)
-    print((0..10).mapNotNull { i.next() }.toString() ==
-            "[1, 2, 3, 4, 5, 6, 7]")
-
+    val order = Order()
+    order.orderedItems // 처음 액세스 시 상품 정보 로드됨
+    val totalPrice = order.calculateTotalPrice()
+    println("주문 총 가격: $totalPrice")
 }
