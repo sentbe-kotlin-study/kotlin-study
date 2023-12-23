@@ -1,3 +1,5 @@
+package day10
+
 import kotlin.reflect.KProperty
 
 // 위임 속성, lazy 초기화 사용
@@ -12,15 +14,15 @@ class Order {
     // TODO: 주문한 총 가격을 계산하는 함수를 구현하세요.
     // 구현할 메서드 이름: calculateTotalPrice
     fun calculateTotalPrice(): Double {
-        return orderedItems.sumOf { _itemPrices.getValue(it.name) * it.quantity }
+        return orderedItems.sumOf { item -> _itemPrices.getValue(item.name) * item.quantity }
     }
 
     // 상품 정보 로드 시뮬레이션
     private fun loadOrderedItems(): List<OrderedItem> {
         return listOf(
-                OrderedItem("ProductA", 2),
-                OrderedItem("ProductB", 3),
-                OrderedItem("ProductC", 1)
+            OrderedItem("ProductA", 2),
+            OrderedItem("ProductB", 3),
+            OrderedItem("ProductC", 1)
         )
     }
 }
@@ -51,8 +53,8 @@ class PriceChangeLogging(initialPrices: Map<String, Double>) {
     }
 }
 
-// Example usage:
 fun main() {
+    // Example usage:
     val order = Order()
     order.orderedItems // 처음 액세스 시 상품 정보 로드됨
     val totalPrice = order.calculateTotalPrice()
